@@ -33,16 +33,16 @@ def check_constraints(graph, source, sink, flow):
         if current_vertex != source and current_vertex != sink:
             # Determine flow going into vertex
             total_in_flow = sum([flow[(inw.tail, current_vertex)] for inw in inward])
+            total_out_flow = sum([flow[(current_vertex, out.head)] for out in outward])
 
             if total_in_flow != total_out_flow:
                 return False
 
-            # Constraint 3: flow splits evenly between edges
-            expected_flow_split_cost = total_in_flow/len(outward)
-            for out in outward:
-                flow_cost = flow[(current_vertex, out.head)]
-                if not is_equal(flow_cost, expected_flow_split_cost):
-                    return False
+        # Constraint 3: flow splits evenly between edges
+        if outward:
+            all_outward_flow_cost = [flow[(current_vertex, out.head)] for out in outward]
+            if len(set(all_outward_flow_cost)) != 1:
+                return False
 
         if to_visit:
             to_visit.pop(0)
