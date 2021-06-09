@@ -4,16 +4,31 @@ def in_degree(graph, vertex):
     return len(graph.in_edges(vertex))
 
 def check_constraints(graph, source, sink, flow):
-    raise NotImplementedError('You must implement the function without changing the function name and argument list.')
+    # Constraint 1: flow <= capacity
+    for f in flow:
+        flow_cost = flow[f]
+        tail = f[0]
+
+        # Access capacity cost
+        for g in graph.out_edges(tail):
+            print(flow_cost, g.capacity)
+            if (g.tail,g.head) == f and flow_cost > g.capacity:
+
+                return False
+
+    print()
+    return True
+    # Constraint 2: flow in = flow out
+    # Constraint 3: flow splits evenly between edges
 
 def is_feasible(graph, source, sink, flow_value):
-    raise NotImplementedError('You must implement the function without changing the function name and argument list.')
-        
+    pass
+
 def max_equal_split_flow(graph, source, sink):
-    raise NotImplementedError('You must implement the function without changing the function name and argument list.')
+    pass
 
 def max_equal_split_flow_upgrade(graph, source, sink):
-    raise NotImplementedError('You must implement the function without changing the function name and argument list.')
+    pass
 
 def grid_graph(width, height, common_capacity):
     vertices = [(x,y) for x in range(width + 1) for y in range(height + 1)]
